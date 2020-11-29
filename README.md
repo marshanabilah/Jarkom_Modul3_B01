@@ -218,7 +218,7 @@ $TTL    604800
 
 ```service bind9 restart```
 
-Atur proxy manual di firefox
+Atur proxy manual di firefox mengetikkan domain janganlupa-ta.b01.pw dan memasukkan port 8080
  
 ![alt text](img/proxy_janlup-ta.png)
  
