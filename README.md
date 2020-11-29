@@ -31,6 +31,17 @@ xterm -T MADIUN -e linux ubd0=MADIUN,jarkom umid=MADIUN eth0=daemon,,,switch3 m$
 
 Kelompok kami tidak membuat setup DHCP Server pada TUBAN (dengan relay pada SURABAYA), namun membuat setup DHCP pada SURABAYA (tanpa DHCP Relay). 
 
+```apt-get install isc-dhcp-server``` di SURABAYA
+
+```nano /etc/default/isc-dhcp-server```
+
+tambahkan di isc-dhcp-server
+
+```
+INTERFACESv4="eth1 eth2"
+INTERFACESv6=""
+```
+
 3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 , 5. mendapatkan DNS Malang dan DNS 202.46.129.2 dari DHCP, dan 6. peminjaman alamat IP selama 5 menit
 
 ```nano /etc/dhcp/dhcpd.conf```
@@ -152,7 +163,13 @@ error_directory /usr/share/squid/errors/English/
  
 12. Ketika menggunakan proxy cukup dengan mengetikkan domain janganlupa-ta.yyy.pw dan memasukkan port 8080. 
  
+di MALANG
+
+inatall bind9 ```apt-get install bind9 -y```
+
 ```nano /etc/bind/named.conf.local```
+
+tambahkan di named.conf.local
 
 ```
 zone "janganlupa-ta.b01.pw" {
@@ -166,6 +183,8 @@ zone "janganlupa-ta.b01.pw" {
 ```cp /etc/bind/db.local /etc/bind/jarkom/janganlupa-ta.b01.pw```
 
 ```nano /etc/bind/jarkom/janganlupa-ta.b01.pw```
+
+isinya seperti ini
 
 ```
 $TTL    604800
