@@ -178,7 +178,7 @@ error_directory /usr/share/squid/errors/English/
 
 ![alt text](img/error_access.png)
  
-12. Ketika menggunakan proxy cukup dengan mengetikkan domain janganlupa-ta.yyy.pw dan memasukkan port 8080. 
+12. Ketika menggunakan proxy cukup dengan mengetikkan domain `janganlupa-ta.yyy.pw` dan memasukkan port 8080. 
  
 di MALANG
 
