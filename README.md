@@ -217,3 +217,15 @@ $TTL    604800
 ```
 
 ```service bind9 restart```
+
+Atur proxy manual di firefox
+ 
+![alt text](img/proxy_janlup-ta.png)
+ 
+Masukkan kembali username dan password
+ 
+![alt text](img/auth_success.png)
+ 
+Berhasil browsing
+ 
+![alt text](img/berhasil_browsing.png)
