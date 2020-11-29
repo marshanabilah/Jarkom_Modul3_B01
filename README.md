@@ -178,7 +178,7 @@ error_directory /usr/share/squid/errors/English/
 
 ![alt text](img/error_access.png)
  
-12. Ketika menggunakan proxy cukup dengan mengetikkan domain `janganlupa-ta.yyy.pw` dan memasukkan port 8080. 
+12. Ketika menggunakan proxy cukup dengan mengetikkan domain janganlupa-ta.yyy.pw dan memasukkan port 8080. 
  
 di MALANG
 
@@ -218,7 +218,7 @@ $TTL    604800
 
 ```service bind9 restart```
 
-Atur proxy manual di firefox mengetikkan domain janganlupa-ta.b01.pw dan memasukkan port 8080
+Atur proxy manual di firefox mengetikkan domain `janganlupa-ta.b01.pw` dan memasukkan port 8080
  
 ![alt text](img/proxy_janlup-ta.png)
  
