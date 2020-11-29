@@ -2,6 +2,7 @@
 
 3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 
 dan 6. peminjaman alamat IP selama 5 menit
+
 ```nano /etc/dhcp/dhcpd.conf```
 
 ```
@@ -18,6 +19,7 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
 
 4. Client pada subnet 2 mendapatkan range IP 192.168.0.50 sampai 192.168.1.70 dan 6. peminjamaman alamat 
 IP selama 10 menit
+
 ```nano /etc/dhcp/dhcpd.conf```
 
 ```
@@ -90,7 +92,7 @@ http_access allow USERS AVAILABLE_WORKING2
 http_access allow USERS AVAILABLE_WORKING3
 ```
 
-9. pada saat Anri mengakses google.com, maka akan redirect ke monta.if.its.ac.id
+10. pada saat Anri mengakses google.com, maka akan redirect ke monta.if.its.ac.id
 
 ```nano /etc/squid/squid.conf```
 
@@ -115,4 +117,33 @@ http_access deny REDIRECT
 http_access allow USERS AVAILABLE_WORKING
 http_access allow USERS AVAILABLE_WORKING2
 http_access allow USERS AVAILABLE_WORKING3
+```
+
+11. Anri diminta mengganti error page default squid
+
+```nano /etc/squid/squid.conf```
+
+```
+acl all src 0.0.0.0/0.0.0.0
+
+include /etc/squid/acl.conf
+http_port 8080
+visible_hostname mojokerto
+
+auth_param basic program /usr/lib/squid/ncsa_auth /etc/squid/passwd
+auth_param basic children 5
+auth_param basic realm Proxy
+auth_param basic credentialsttl 2 hours
+auth_param basic casesensitive on
+acl USERS proxy_auth REQUIRED
+
+acl REDIRECT dstdomain .google.com
+deny_info http://monta.if.its.ac.id/ REDIRECT
+http_access deny REDIRECT
+
+http_access allow USERS AVAILABLE_WORKING
+http_access allow USERS AVAILABLE_WORKING2
+http_access allow USERS AVAILABLE_WORKING3
+
+error_directory /usr/share/squid/errors/English/
 ```
