@@ -47,10 +47,11 @@ di Mojokerto
 
 ```nano /etc/squid/squid.conf```
 
+isi squid.conf seperti ini
+
 ```
 acl all src 0.0.0.0/0.0.0.0
 
-include /etc/squid/acl.conf
 http_port 8080
 visible_hostname mojokerto
 
@@ -61,6 +62,8 @@ auth_param basic credentialsttl 2 hours
 auth_param basic casesensitive on
 acl USERS proxy_auth REQUIRED
 ```
+
+```service squid restart```
 
 8. penggunaan internet Anri dibatasi menjadi Selasa - Rabu pukul 13.00-18.00 dan 9. Selasa - Kamis pukul 21.00-09.00
 
@@ -74,76 +77,46 @@ acl AVAILABLE_WORKING3 time WHF 00:00-09:00
 
 ```nano /etc/squid/squid.conf```
 
-```acl all src 0.0.0.0/0.0.0.0
+tambahkan di squid.conf
 
+```
 include /etc/squid/acl.conf
-http_port 8080
-visible_hostname mojokerto
-
-auth_param basic program /usr/lib/squid/ncsa_auth /etc/squid/passwd
-auth_param basic children 5
-auth_param basic realm Proxy
-auth_param basic credentialsttl 2 hours
-auth_param basic casesensitive on
-acl USERS proxy_auth REQUIRED
 
 http_access allow USERS AVAILABLE_WORKING
 http_access allow USERS AVAILABLE_WORKING2
 http_access allow USERS AVAILABLE_WORKING3
 ```
+
+```service squid restart```
 
 10. pada saat Anri mengakses google.com, maka akan redirect ke monta.if.its.ac.id
 
 ```nano /etc/squid/squid.conf```
 
+tambahkan di squid.conf
+
 ```
-acl all src 0.0.0.0/0.0.0.0
-
-include /etc/squid/acl.conf
-http_port 8080
-visible_hostname mojokerto
-
-auth_param basic program /usr/lib/squid/ncsa_auth /etc/squid/passwd
-auth_param basic children 5
-auth_param basic realm Proxy
-auth_param basic credentialsttl 2 hours
-auth_param basic casesensitive on
-acl USERS proxy_auth REQUIRED
-
 acl REDIRECT dstdomain .google.com
 deny_info http://monta.if.its.ac.id/ REDIRECT
 http_access deny REDIRECT
-
-http_access allow USERS AVAILABLE_WORKING
-http_access allow USERS AVAILABLE_WORKING2
-http_access allow USERS AVAILABLE_WORKING3
 ```
+
+```service squid restart```
 
 11. Anri diminta mengganti error page default squid
 
+```cd /usr/share/squid/errors/English```
+
+```rm ERR_ACCESS_DENIED```
+
+```wget 10.151.36.202/ERR_ACCESS_DENIED```
+
 ```nano /etc/squid/squid.conf```
 
+tambahkan di squid.conf
+
 ```
-acl all src 0.0.0.0/0.0.0.0
-
-include /etc/squid/acl.conf
-http_port 8080
-visible_hostname mojokerto
-
-auth_param basic program /usr/lib/squid/ncsa_auth /etc/squid/passwd
-auth_param basic children 5
-auth_param basic realm Proxy
-auth_param basic credentialsttl 2 hours
-auth_param basic casesensitive on
-acl USERS proxy_auth REQUIRED
-
-acl REDIRECT dstdomain .google.com
-deny_info http://monta.if.its.ac.id/ REDIRECT
-http_access deny REDIRECT
-
-http_access allow USERS AVAILABLE_WORKING
-http_access allow USERS AVAILABLE_WORKING2
-http_access allow USERS AVAILABLE_WORKING3
-
 error_directory /usr/share/squid/errors/English/
 ```
+
+```service squid restart```
