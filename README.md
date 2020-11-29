@@ -42,10 +42,6 @@ INTERFACESv4="eth1 eth2"
 INTERFACESv6=""
 ```
 
-![alt text](img/ifconfig1.jpg)
-
-![alt text](img/ifconfig2.jpg)
-
 3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 , 5. mendapatkan DNS Malang dan DNS 202.46.129.2 dari DHCP, dan 6. peminjaman alamat IP selama 5 menit
 
 ```nano /etc/dhcp/dhcpd.conf```
@@ -76,6 +72,15 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
     	max-lease-time 7200;
 }
 ```
+
+![alt text](img/ifconfig1.png)
+
+![alt text](img/ifconfig2.png)
+
+![alt text](img/ifconfig3.png)
+
+![alt text](img/ifconfig4.png)
+
 
 7. User autentikasi
 
@@ -109,7 +114,7 @@ acl USERS proxy_auth REQUIRED
 
 ```service squid restart```
 
-![alt text](img/auth success.png)
+![alt text](img/auth_success.png)
 
 8. penggunaan internet Anri dibatasi menjadi Selasa - Rabu pukul 13.00-18.00 dan 9. Selasa - Kamis pukul 21.00-09.00
 
@@ -135,7 +140,7 @@ http_access allow USERS AVAILABLE_WORKING3
 
 ```service squid restart```
 
-![alt text](img/error access.png)
+![alt text](img/error_access.png)
 
 10. pada saat Anri mengakses google.com, maka akan redirect ke monta.if.its.ac.id
 
@@ -151,7 +156,7 @@ http_access deny REDIRECT
 
 ```service squid restart```
 
-![alt text](img/redirect monta.png)
+![alt text](img/redirect_monta.png)
 
 11. Anri diminta mengganti error page default squid
 
@@ -171,7 +176,7 @@ error_directory /usr/share/squid/errors/English/
 
 ```service squid restart```
 
-![alt text](img/error access.png)
+![alt text](img/error_access.png)
  
 12. Ketika menggunakan proxy cukup dengan mengetikkan domain janganlupa-ta.yyy.pw dan memasukkan port 8080. 
  
