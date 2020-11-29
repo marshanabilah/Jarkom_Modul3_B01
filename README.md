@@ -42,6 +42,10 @@ INTERFACESv4="eth1 eth2"
 INTERFACESv6=""
 ```
 
+![alt text](img/ifconfig1.jpg)
+
+![alt text](img/ifconfig2.jpg)
+
 3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 , 5. mendapatkan DNS Malang dan DNS 202.46.129.2 dari DHCP, dan 6. peminjaman alamat IP selama 5 menit
 
 ```nano /etc/dhcp/dhcpd.conf```
