@@ -1,7 +1,37 @@
 # Jarkom_Modul3_B01
+ 
+1. Membuat topologi jaringan dengan kriteria sebagai berikut:
+ 
+![alt text](img/topo.jpg)
+ 
+SURABAYA sebagai router, MALANG sebagai DNS Server, TUBAN sebagai DHCP server, serta MOJOKERTO sebagai Proxy server, dan UML lainnya sebagai client. 
+ 
+```
+# Switch
+uml_switch -unix switch1 > /dev/null < /dev/null &
+uml_switch -unix switch2 > /dev/null < /dev/null &
+uml_switch -unix switch3 > /dev/null < /dev/null &
 
-3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 
-dan 6. peminjaman alamat IP selama 5 menit
+# Router
+xterm -T SURABAYA -e linux ubd0=SURABAYA,jarkom umid=SURABAYA eth0=tuntap,,,10.$
+
+# Server
+xterm -T MALANG -e linux ubd0=MALANG,jarkom umid=MALANG eth0=daemon,,,switch2 m$
+xterm -T MOJOKERTO -e linux ubd0=MOJOKERTO,jarkom umid=MOJOKERTO eth0=daemon,,,$
+xterm -T TUBAN -e linux ubd0=TUBAN,jarkom umid=TUBAN eth0=daemon,,,switch2 mem=$
+
+# Klien
+xterm -T SIDOARJO -e linux ubd0=SIDOARJO,jarkom umid=SIDOARJO eth0=daemon,,,swi$
+xterm -T GRESIK -e linux ubd0=GRESIK,jarkom umid=GRESIK eth0=daemon,,,switch1 m$
+xterm -T BANYUWANGI -e linux ubd0=BANYUWANGI,jarkom umid=BANYUWANGI eth0=daemon$
+xterm -T MADIUN -e linux ubd0=MADIUN,jarkom umid=MADIUN eth0=daemon,,,switch3 m$
+```
+ 
+2. SURABAYA ditunjuk sebagai perantara (DHCP Relay) antara DHCP Server dan client.
+
+Kelompok kami tidak membuat setup DHCP Server pada TUBAN (dengan relay pada SURABAYA), namun membuat setup DHCP pada SURABAYA (tanpa DHCP Relay). 
+
+3. Client pada subnet 1 mendapatkan range 192.168.0.10 sampai 192.168.0.100 dan 192.168.0.110 , 5. mendapatkan DNS Malang dan DNS 202.46.129.2 dari DHCP, dan 6. peminjaman alamat IP selama 5 menit
 
 ```nano /etc/dhcp/dhcpd.conf```
 
@@ -17,8 +47,7 @@ subnet 192.168.0.0 netmask 255.255.255.0 {
 }
 ```
 
-4. Client pada subnet 2 mendapatkan range IP 192.168.0.50 sampai 192.168.1.70 dan 6. peminjamaman alamat 
-IP selama 10 menit
+4. Client pada subnet 2 mendapatkan range IP 192.168.0.50 sampai 192.168.1.70 , 5. mendapatkan DNS Malang dan DNS 202.46.129.2 dari DHCP, dan 6. peminjamaman alamat IP selama 10 menit
 
 ```nano /etc/dhcp/dhcpd.conf```
 
@@ -120,3 +149,35 @@ error_directory /usr/share/squid/errors/English/
 ```
 
 ```service squid restart```
+ 
+12. Ketika menggunakan proxy cukup dengan mengetikkan domain janganlupa-ta.yyy.pw dan memasukkan port 8080. 
+ 
+```nano /etc/bind/named.conf.local```
+
+```
+zone "janganlupa-ta.b01.pw" {
+        type master;
+        file "/etc/bind/jarkom/janganlupa-ta.b01.pw";
+}; 
+``` 
+
+```mkdir /etc/bind/jarkom```
+
+```cp /etc/bind/db.local /etc/bind/jarkom/janganlupa-ta.b01.pw```
+
+```nano /etc/bind/jarkom/janganlupa-ta.b01.pw```
+
+```
+$TTL    604800
+@       IN      SOA     janganlupa-ta.b01.pw. root.janganlupa-ta.b01.pw. (
+                        2020112501      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      janganlupa-ta.b01.pw.
+@       IN      A       10.151.83.19
+```
+
+```service bind9 restart```
